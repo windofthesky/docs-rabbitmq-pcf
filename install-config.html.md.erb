@@ -1,0 +1,141 @@
+---
+title: Installing and Configuring My Service
+owner: <your group name> # <---- For example "London Services"
+---
+
+_This topic provides instructions for how to install, configure, and deploy the tile. Typically, this includes procedures for how to download the tile from PivNet, install it on Ops Manager, configure and deploy the tile, and do any required third-party configuration. Screenshots should be provided where necessary._
+
+_The suggested title for this page is “Installing and Configuring My Service.”
+If necessary, break it into two pages called “Installing My Service” and “Configuring My Service, or multiple product-specific configuration pages for integrating with other products. The topic [Deploying JMX Bridge](http://docs.pivotal.io/jmx-bridge/deploy-metrics.html) is a good example, except that it's called "Deploying" instead of "Installing and Configuring."_
+
+_For examples of formatting in these docs, like lists, text styles, images, tables, and Note boxes, see the [Markdown section](#markdown) at the bottom of this page._
+
+_Make sure to include a link to the [Upgrading page](./upgrade.html) from this page._
+
+_Suggested second-level sections for this page are:_
+
+## <a id="install"></a> Install My Service
+
+_If your installation procedure is standard, consider cross-referencing this topic: “Adding and Deleting Products” ([v1.7](http://docs-pcf-staging.cfapps.io/pivotalcf/1-7/customizing/add-delete.html#pivnet-api)) or ([v1.8](http://docs-pcf-staging.cfapps.io/pivotalcf/1-8/customizing/add-delete.html#pivnet-api)). If your installation is customized, consider copying and modifying the procedure._
+
+## <a id="config"></a> Configure My Service
+
+_This typically includes completing the tile configuration sections in Ops Manager, and can also include any configuration on the product side._ 
+
+## <a id="deploy"></a> Deploy My Service
+
+_body text_
+
+## <a id="secure"></a> Secure My Service
+
+_If there are any special security features associated with the product, place them here._
+
+## <a id="integrate"></a> Integrate My Service with Other Product
+
+_Integrate with Other Product: If there are procedures for integrating the product with other products, place them here. Or more detailed configurations, break them out into their own product-specific configuration pages._
+
+## <a id="markdown"></a>Markdown Examples
+
+_For your documentation convenience, here are some examples of Markdown and `html.md.erb` formatting that you can use:_
+
+### Links
+
+[Here is how you link to anchors on this page](#secure).
+
+[Here is how you link to other pages](index.html).
+
+### Lists
+
+This is a bulleted list:
+
+* First list item
+
+* Second list item
+
+* Nesting is possible:
+    * Nested item 1
+    * Nested item 2
+
+This is a numbered list:  
+
+1. Just use 1. (or any digit) for every number and Markdown numbers for you.
+
+1. But you need to have just one empty line in between each numbered line.
+
+1. Otherwise, it will re-number, starting at 1.
+
+1. Nesting is possible:
+    1. Nested item 1
+    1. Nested item 2
+
+### Code Formatting
+
+Use single backquote characters (\`) around anything you want to appear in code formatting, like this" `cf push`.
+
+<p class="note"><strong>Note</strong>: Format notes like this to bring attention to a point or warning. Inside a note, you have to use HTML formatting rather than Markdown formatting—so use HTML tags <strong>strong</strong>, <em>em</em>, <code>a href</code> for links, <code>code</code> for code, etc.</p>
+
+### Terminal Formatting
+
+For terminal session examples, use the `terminal` style class like this, without indenting:
+
+<pre class='terminal'>
+$ bosh --ca-cert /var/tempest/workspaces/default/root_ca_certificate target 192.0.2.6
+Target set to 'DIRECTOR_UUID'
+Your username: director
+Enter password: (DIRECTOR_CREDENTIAL)
+Logged in as 'director'
+</pre>
+
+### Images
+
+You can embed images in at least two ways. Either way, the image needs to be in an `images` subfolder under your `html.md.erb` content.
+
+<%= image_tag("smiley.png") %>
+
+![Smiley Alt Text](smiley.png)
+
+[//]: # (This may be the most platform independent comment)
+
+<p class="note"><strong>Note</strong>: <em>Screenshots should be in PNG format.
+Screenshots should have a black border, one-pixel wide. You can use your favorite image editor to do this or the utility script <a href="https://github.com/pivotal-cf-experimental/docs-utility-scripts/tree/master/bordify">Bordify</a>.</em></p>
+
+### Tables
+
+You can embed a table in either Markdown or HTML format.
+
+2x2 Markdown Table; easier to read source
+
+Heading 1       | Heading 2
+----------------|-----------
+Cell contents 1 | Cell contents 2
+
+2x2 HTML Table
+
+<table id='TK-NAME' border="1" class="nice" >
+  <tr>
+    <th>Heading 1</th>
+    <th>Heading 2</th>
+  </tr><tr>
+    <td>Cell contents 1</td>
+    <td>Cell contents 2</td>
+  </tr>
+</table>
+
+### Flowcharts, Sequence Diagrams, and Gantt Charts using Mermaid
+
+Bookbinder supports [mermaid](http://knsv.github.io/mermaid/), an easy way to make inline graphics, provided that they're flowcharts, sequence diagrams, or Gantt charts. Here's an example sequence diagram:
+
+<div class="mermaid">
+sequenceDiagram
+  User_div->>CloudFoundry:bind-service
+  CloudFoundry->>ODB:bind-service-instance
+  ODB->>ServiceAdapter:create-binding
+  ServiceAdapter->>ODB:binding info
+  ODB->>CloudFoundry:binding info
+</div>
+
+### Markdown and Pivotal style resources
+
+* [Create or Edit Text Content](https://github.com/pivotal-cf-experimental/docs-wiki-internal/wiki/Create-or-edit-text-content) from PCF docs wiki.
+* [Pivotal Documentation Style Guide](http://docs.pivotal.io/style_guide/)
+

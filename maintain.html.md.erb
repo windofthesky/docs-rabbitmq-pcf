@@ -1,0 +1,91 @@
+---
+title: Maintaining My Service
+owner: <your group name> # <---- For example "London Services"
+---
+
+_This topic provides instructions for how to maintain service uptime and availability, including tasks such as:_
+
+* _Backups and Recovery_
+* _Monitoring, Metrics, Logging, Analysis, and Reports_
+* _Troubleshooting_
+
+_If the tasks are few and short, consider placing them on a single page called “Maintaining My Service.” If longer, use multiple pages named appropriately._
+
+_The Redis service has an excellent example of a [monitoring topic](http://docs.pivotal.io/redis/monitoring.html)._
+
+## <a id="monitoring"></a> Monitor My Service
+
+This topic provides instructions for monitoring My Service for PCF using the metrics emitted from the [Loggregator Firehose](http://docs.pivotal.io/redis/monitoring.html). It also lists and describes those metrics.
+
+Follow this procedure to monitor My Service:
+
+1. Navigate to the Metrics configuration page...
+
+## <a id="metrics"></a> My Service Metrics
+
+My Service emits a number of metrics that can be used to monitor the health and performance of your My Service deployment.
+
+### <a id="metric1"></a>  Metric 1
+
+<table>
+  <tbody>
+  <tr>
+    <td><i>Description</i></p></td>
+    <td><i>&lt;description of metrics&gt;</i></p></td></tr>
+  <tr><td><i>Significance</i></p></td>
+    <td><i>&lt;significance of metrics&gt;</i></p></td></tr>
+  <tr><td><i>Notes</i></p></td>
+    <td><i>&lt;optional row containing additional notes&gt;</i></p></td></tr>
+   </tbody>
+</table>
+
+### <a id="metric2"></a> Metric 2
+
+<table>
+  <tbody>
+    <tr>
+	    <td><i>Description</i></p></td>
+	    <td><i>&lt;description of metrices&gt;</i></p></td>
+    </tr>   
+	<tr>
+	    <td><i>Significance</i></p></td>
+	    <td><i>&lt;significance of metrics&gt;</i></p></td>
+    </tr>   
+    <tr>
+    	<td><i>Notes</i></p></td>
+    	<td><i>&lt;optional row containing additional notes&gt;</i></p></td>
+    </tr> 
+   </tbody>
+</table>
+
+ _If you have a lot of metrics and don’t need to explain the significance or add notes, you can also use a single two-column table with headings "Metric Name" and "Description", examples [here](http://docs.pivotal.io/pivotalcf/loggregator/all_metrics.html)._
+
+For general information about metrics in Pivotal Cloud Foundry, see [Logging and Metrics](http://docs.pivotal.io/pivotalcf/loggregator/index.html).
+
+## <a id="troubleshooting"></a> Troubleshoot My Service
+
+_List troubleshooting by symptom, explanation, and solution:_
+
+### <a id="ipsec-installation-issues"></a> IPsec Installation Issues
+
+#### Symptom
+Unresponsive applications or incomplete responses, particularly for large payloads
+
+#### Explanation: Packet Loss
+IPsec packet encryption increases the size of packet payloads on host VMs. If the size of the larger packets exceeds the maximum transmission unit (MTU) size of the host VM, packet loss may occur when the VM forwards those packets.
+
+If your VMs were created with an Amazon PV stemcell, the default MTU value is 1500 for both host VMs and the application containers. If your VMs were created with Amazon HVM stemcells, the default MTU value is 9001. Garden containers default to 1500 MTU.
+
+#### Solution
+Implement a 100 MTU difference between host VM and the contained application container, using one of the following approaches:
+
+* Decrease the MTU of the application containers to a value lower than the MTU of the VM for that container. In the ERT tile configuration, click **Networking** and modify **Applications Network Maximum Transmission Unit (MTU) (in bytes)** before you deploy. Decrease it from the default value of 1454 to 1354.
+
+* Increase the MTU of the application container VMs to a value greater than 1500. Pivotal recommends a headroom of 100. Run <code>ifconfig NETWORK-INTERFACE mtu MTU-VALUE</code> to make this change. Replace NETWORK-INTERFACE with the network interface used to communicate with other VMs For example:
+<code>$ ifconfig NETWORK-INTERFACE mtu 1600</code>
+
+<hr>
+
+
+
+

@@ -1,106 +1,68 @@
 ---
-title: RabbitMQ&reg; for Pivotal Cloud Foundry
-owner: London Services
+title: Upgrading My Service
+owner: <your group name> # <---- For example "London Services"
 ---
 
-# Upgrades
+_This topic provides the upgrade path information and instructions on how to upgrade the product._
 
-This product enables automated upgrades between versions of the product and is deployed through Ops Manager, and due to RabbitMQ product limitations may require the cluster to be taken offline.  When this is necessary it is clearly noted in the release notes for that version.
+_Example:_
+This version of Pivotal GemFire for PCF supports upgrading from all the previous versions of the product. Running service instances are automatically upgraded one node at a time. If you configured your clusters with data redundancy, then the upgrade process requires no downtime and results in no data loss.
+Note: Upgrades from Alpha or Beta versions of the software are not supported.
 
-Note there is a difference between the cluster remaining available during a tile upgrade/update, and an individual queue placed on nodes in a cluster.
-The upgrade paths are detailed [here](http://docs.pivotal.io/rabbitmq-cf/index.html) for each released version.
+## <a id="path"></a> Upgrade Path
 
-A reference guide for deployments is shown the table below.  Please be aware that this is a guide only and that the release notes for the version you are updating to must be checked before upgrading.
+_Outline the upgrade route from any previous version to the current. This can be a table listing which versions of Ops Manager support which product version upgrades. For example:_
 
 <table border="1" class="nice">
 <tr>
-  <th>Operations Manager Action</th>
-  <th>Will Downtime Be Required For This Upgrade / Update </th>
+  <th rowspan="2">Elastic Runtime Version</th>
+  <th colspan="2">Supported Upgrades from SSO Versions</th>
 </tr>
 <tr>
-  <th>Major Tile Version Upgrade</th>
-  <td><ul>
-  <li>The RabbitMQ cluster will be taken offline for the duration of the upgrade</li>
-    </ul>
-  </td>
-</tr>
-<tr>
-  <th>Minor Tile Version Upgrade</th>
-  <td><ul>
-  <li>The RabbitMQ cluster will be taken offline for the duration of the upgrade</li>
-    </ul>
-  </td>
-</tr>
-<tr>
-  <th>Patch Tile Version Upgrades</th>
-  <td><ul>
-  <li>Normally these are rolling deployments with each node being updated in turn.  In these cases the cluster will remain available but individual queues may be taken offline, as each node is restarted.  There are specific migration paths which will require downtime which will be identified in the release notes for that version. </li>
-    </ul>
-  </td>
-<tr>
-  <th>Stemcell Only - Patch Tile Version Upgrades</th>
-  <td><ul>
-  <li>Where the patch update is only a new stemcell version these are rolling deployments with each node bineg updated in turn.  In these cases the cluster will remain available but individual queues may be taken offline, as each node is restarted.
-  </li>
-  </ul>
-  </td>
+  <th>From</th>
+  <th>To</th>
+</tr><tr>
+  <th rowspan="1">1.6.x</th>
+  <td>1.0.1-1.0.14</td>
+  <td rowspan="1">1.0.15</td>
+</tr><tr>
+  <th rowspan="2">1.7.x</th>
+  <td>1.0.1-1.0.15</td>
+  <td rowspan="2">1.1.1</td>
+</tr><tr>
+  <td>1.1.0</td>
 </tr>
 </table>
 
+_Other examples of tables used for the Upgrade Path:_
+
+* [App Distribution](http://docs.pivotal.io/app-dist/index.html)
+* [RabbitMQ for PCF](http://docs.pivotal.io/rabbitmq-cf/index.html) for an example of a complicated upgrade path.
 
 
-The specific upgrade paths are detailed [here](http://docs.pivotal.io/rabbitmq-cf/index.html) for each released version.
+_For simpler cases, when the upgrade path is identical to the installation procedure, you can write a mini-procedure like this:_
 
-<p class="note"><strong>Note</strong>: For specific information about updating RabbitMQ for PCF from v1.6.0–v1.6.4,
-see <a href="http://docs.pivotal.io/rabbitmq-cf/1-6-6/updating.html">Updating RabbitMQ for PCF from versions v1.6.x to v1.6.6</a>.</p>
+Follow the [Install My Service](./install-config.html) procedure to upgrade.
 
-<p class="note"><strong>Note</strong>: For specific information about updating
-RabbitMQ for PCF from v1.6.0–v1.6.4, see <a
-href="http://docs.pivotal.io/rabbitmq-cf/1-6-6/updating.html">Updating RabbitMQ
-for PCF from versions v1.6.x to v1.6.6</a>.</p>
 
-To upgrade the product:
+## <a id="prepare"></a> Preparing to Upgrade (if procedures) or Prerequisites for Upgrading (if just a list)
 
-* The Operator should download the latest version of the product from [Pivotal Network](https://network.pivotal.io/products/pivotal-rabbitmq-service)
-* Upload the new .pivotal file to Ops Manager
-* Upload the stemcell associated with the update (*if required*)
-* Update any new mandatory configuration parameters (*if required*)
-* Press "Apply changes" and the rest of the process is automated
+_body text_
 
-Depending on the network partition handling that you have configured and the
-resource config, you should benefit from the product's stemcell rolling
-upgrades. The default HAProxy instance count has changed from 1 to 2 and the
-RabbitMQ node count from 2 to 3. This is required for rolling stemcell
-upgrades. This is the minimum deployment size that we recommend for the default
-`pause_minority` RabbitMQ network partition behaviour. See [Clustering and
-Network Partitions](./partitions.html) for more information.
+## <a id="upgrade"></a>Upgrade to the Latest Version
 
-Only when upgrading between specific versions of Erlang or RabbitMQ will the
-cluster become unavailable. This will be clearly stated on the release notes for
-that version, should this be the case.
+_body text_
 
-The length of the downtime depends on whether there is a stemcell update to
-replace the operating system image or whether the existing VM can simply have
-the RabbitMQ software updated. Stemcell updates incur additional downtime while
-the IaaS creates the new VM.
+## <a id="config-check"></a> Configuration Check
 
-Ops Manager ensures the instances are updated with the new packages and any
-configuration changes are applied automatically.
+_Any configuration changes required after upgrading._
 
-Upgrading to a newer version of the product should not cause any loss of data or
-configuration.
+## <a id="policy"></a> Release Policy
 
-Please note that it may take busy RabbitMQ nodes a long time to shutdown during
-the upgrade and this process must not be interrupted.
+_Optional, see example below._
 
-For any issues upgrading RabbitMQ, please refer to the
-[Troubleshooting](./troubleshooting.html) section.
+Where there is a new version of RabbitMQ or another dependent software component, such as the stemcell released due to a critical CVE, Pivotal’s goal is to release a new version of the product within 48 hours.
 
-## Release policy
 
-When a new version of RabbitMQ is released we aim to release a new version of
-the product containing this soon after.
 
-Where there is a new version of RabbitMQ or another dependent software
-component such as the stemcell released due to a critical CVE, Pivotal's goal
-is to release a new version of the product within 48 hours.
+

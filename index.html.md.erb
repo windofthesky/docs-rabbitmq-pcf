@@ -11,19 +11,28 @@ This guide describes RabbitMQ for Pivotal Cloud Foundry (PCF), which lets PCF ap
 Operators install the RabbitMQ for PCF service and publish it to the Marketplace using PCF Operations Manager (Ops Manager).
 Developers then create service instances of the service to call from their apps. 
 
-RabbitMQ for PCF can run as either a shared, multi-tenant service provisioned by the operator, or as an on-demand service that allows developers to provision instances dynamically.
+RabbitMQ for PCF can run as either a shared, multi-tenant service provisioned by the operator, 
+or as an on-demand service that allows developers to provision instances dynamically.
 
 You can deploy RabbitMQ for PCF in two architectures, *on-demand* and *shared*:
 
-+ The *on-demand service* architecture is new as of version 1.8. This v1.8+ documentation describes using RabbitMQ for PCF as an on-demand service. 
++ The *on-demand service* architecture is new as of v1.8. 
+  This v1.8+ documentation describes using RabbitMQ for PCF as an on-demand service. 
 
-+ The *shared service* architecture has been available since version 1.2. Operators can deploy the shared service to run on a single node or on a cluster. For documentation on the shared service, see [XX]() or select `v1.7.10` or earlier in the dropdown above. 
++ The *shared service* architecture has been available since v1.2. 
+  Operators can deploy the shared service to run on a single node or on a cluster. 
+  For documentation on the shared service, see 
+[RabbitMQ for Pivotal Cloud Foundry Documentation](https://docs.pivotal.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/index.html) 
+or select `v1.7.10` or earlier in the dropi-down menu above. 
 
 ## <a id='AboutRabbit'></a>About RabbitMQ
 
-RabbitMQ is a fast and dependable open-source message server, which supports a wide range of use cases including reliable integration, content based routing and global data delivery, and high volume monitoring and data ingestion.
+RabbitMQ is a fast and dependable open-source message server, which supports a wide range of use cases 
+including reliable integration, content based routing and global data delivery, and high volume monitoring and data ingestion.
 
-Emerging as the de facto standard for cloud messaging, RabbitMQ is used for efficient communication between servers, applications and devices, and creates lasting value by enabling rapid development of modern decentralized application and data architectures that can scale with your business needs.
+Emerging as the de facto standard for cloud messaging, RabbitMQ is used for efficient communication 
+between servers, applications and devices, and creates lasting value by enabling rapid development of modern decentralized 
+application and data architectures that can scale with your business needs.
 
 
 
@@ -31,18 +40,22 @@ Emerging as the de facto standard for cloud messaging, RabbitMQ is used for effi
 
 <dl>
 <dt>Current RabbitMQ for PCF Details</dt>
-<dd><strong>Version</strong>: 1.7.8 </dd>
-<dd><strong>Release Date</strong>:  8th December 2016</dd>
+<dd><strong>Version</strong>: v1.8.0 </dd>
+<dd><strong>Release Date</strong>:  March 31, 2017</dd>
 <dd><strong>Software component version</strong>: RabbitMQ OSS 3.6.6</dd>
 <dd><strong>Compatible Ops Manager Version(s)</strong>: 1.8.x </dd>
 <dd><strong>Compatible Elastic Runtime Version(s)</strong>: 1.8.x </dd>
-<dd><strong>vSphere support?</strong> Yes</dd>
 <dd><strong>AWS support?</strong> Yes</dd>
+<dd><strong>Azure support?</strong> ???</dd>
+<dd><strong>GCP support?</strong> ???</dd>
 <dd><strong>OpenStack support?</strong> Yes</dd>
+<dd><strong>vSphere support?</strong> Yes</dd>
 <dd><strong>IPsec support?</strong> No</dd>
 </dl>
 
 ## <a id='features'></a>Features
+
+REVISE THIS FEATURE LIST FOR ON-DEMAND
 
 * Provision an instance of the RabbitMQ service, which corresponds to a unique RabbitMQ Vhost (virtual host)
 * Bind applications to an instance of the plan, providing unique credentials for each binding

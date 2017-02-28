@@ -1,15 +1,95 @@
 ---
-title: Using My Service
-owner: <your group name> # <---- For example "London Services"
+title: Using the RabbitMQ for PCF Service On-Demand
+owner: London Services
 ---
 
-_This topic provides instructions for how to use the product. Typically, this includes procedures for how to perform the different functions offered by the product._
+This topic provides instructions for app developers using the RabbitMQ service from the Marketplace. 
 
-_If the workflow for using this product is complicated or involves multiple components, start this topic by explaining the overall workflow.
-Use a flowchart or a numbered list to show in what order users need to carry out various tasks described in this doc and elsewhere. For an example list of high-level steps_
+Q: What is the exact name of the service as it appear on the Marketplace? Is called "RabbitMQ for PCF" or just "RabbitMQ"?
 
-_If the tasks are few and short, consider placing them on a single page called “Using <short product name>.” If longer, use multiple pages named appropriately for different parts of the product._
+## <a id="prereqs"></a>Prerequisites
 
-_Please provide ample screenshots; at least one for each major context. You can also include conceptual information about architecture here if it relates specifically to using the product. Locate general architecture information on the About page._
+LIST WHAT YOU NEED BEFORE YOU DO THESE
 
-## <a id='heading1'></a>Heading 1
+Your PCF operator has made the RabbitMQ Service (?) available in the Marketplace
+
+You have the 
+
+## <a id='create'></a>Create a service
+
+<code>
+
+   cf api
+
+   cf marketplace
+
+   cd rabbit-labrat/
+
+   cf create-service cf-rabbitmq-odb one-node test-rabbit
+
+   watch cf services
+
+</code>
+
+## <a id="bind"></a>Bind a Service Instance to Your App
+
+<code>
+
+   cf push
+
+   cf bind-service lab-rat test-rabbit
+
+   cf restage lab-rat
+
+   cf env lab-rat
+
+</code>
+
+## <a id="unbind"></a>Unbind a Service Instance to Your App
+
+<code>
+
+   cf unbind-service lab-rat test-rabbit
+
+   cf restage lab-rat
+
+</code>
+
+## <a id="delete"></a>Delete a Service Instance
+
+<code>
+
+   cf delete-service test-rabbit
+
+   cf service test-rabbit
+
+   watch cf service test-rabbit
+
+   cf services
+
+</code>
+
+
+
+   cf api
+   cf marketplace
+   cd rabbit-labrat/
+   cf create-service cf-rabbitmq-odb one-node test-rabbit
+   watch cf services
+   cf push
+   cf bind-service lab-rat test-rabbit
+   cf restage lab-rat
+   cf env lab-rat
+   cf unbind-service lab-rat test-rabbit
+   cf restage lab-rat
+   cf delete-service test-rabbit
+   cf service test-rabbit
+   watch cf service test-rabbit
+   cf services
+`
+
+and the bosh commands:
+   bosh tasks
+   bosh task 234
+   bosh run errand
+   bosh deployments

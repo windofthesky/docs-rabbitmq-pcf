@@ -3,19 +3,78 @@ title: Installing and Configuring RabbitMQ for PCF
 owner: London Services
 ---
 
-This topic provides instructions to PCF operators about how to install, configure, and deploy the RabbitMQ for PCF tile. 
+This topic provides instructions to PCF operators about how to install, configure, and deploy the RabbitMQ for PCF tile
+for an on-demand service. 
 
+<p class="note"><strong>Note</strong>: For instructions on how to install, configure, and deploy the RabbitMQ for PCF tile, see
+<a href="http://docs-pcf-staging.cfapps.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/index.html">the documentation for
+pre-provisioned RabbitMQ for PCF</a>.</p>
 
-## <a id="install"></a>  Install and Configure the RabbitMQ for PCF tile
+## <a id="install"></a>  Download and Install the RabbitMQ for PCF tile
 
 1. Download the product file from Pivotal Network.
 
 2. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file. 
 
-3. Under the **Import a Product** button, click **+** next to the version number of RabbitMQ for PCF. 
-   This adds the tile to your staging area.
+3. Under the **Import a Product** button, click **+** next to the version number of RabbitMQ for PCF. This adds the tile to your staging area.
 
 4. Click the newly added **RabbitMQ for PCF** tile.
+
+## <a id="install"></a>  Configure the RabbitMQ for PCF tile for an On-Demand Service
+
+1. Click **Assign AZs and Networks** and configure the pane:
+
+    <p class="note"><strong>IMPORTANT</strong>: You cannot change the regions or networks after you have [deployed | clicked Apply Changes, step X below].</p>
+     + **Place singleton jobs in**: Select the region that you want for singleton VMs. PCF creates the RabbitMQ broker in this AZ. 
+   (In step X, below, you choose the AZs for the RabbitMQ service instances.)  
+     + **Balance other jobs in**: Select additional region. This selection does not affect the on-demand RabbitMQ for PCF. 
+     + **Network**: Select a subnet for the RabbitMQ broker.  
+   This network is represented by the Default Network in this [picture](https://docs.pivotal.io/on-demand-service-broker/0-14/about.html).
+   Typically, you select the subnet used for the Pivotal Elastic Runtime components. 
+   **Q:** Who sets up this subnet? Should I use the same subnet as for my ERT components? Do we need to specify that it cannot be an IPsec subnet? [https://docs.pivotal.io/rabbitmq-cf/1-7/](https://docs.pivotal.io/rabbitmq-cf/1-7/)] 
+     + **Service Network**: This is the subnet that the on-demand service instances are on. A typical practice is to put all on-demand services on a single subnet. (?) This network is represented by the Services Network in this [picture](https://docs.pivotal.io/on-demand-service-broker/0-14/about.html). If you are not using on-demand services but only classic services, you need to specify a subnet but which subnet you specify does not matter.
+     + Click **Save**.
+
+6. Click **On-demand small plan** and configure the pane.
+*Scott tells me that this page will change and most likely will split up into three separate plans (S, M, L). *
+
+    
+
+1. **RabbitMQ server VM type**: Select a size for the server instances that will be created by this plan. 
+
+2. **RabbitMQ server Disk type**: Select the memory for the persistent disk that will store the RabbitMQ messages.  
+
+3. **HAProxy VM type**: Set the size of the HAProxy load balancer that you want to balance the load. Even if you have only one RabbitMQ server VM for an instance, you need an HAProxy VM, although all the load will be balanced to the one Rabbit server VM. 
+
+4. **RabbitMQ server availability zone(s)**:  Select an AZ. PCF creates the on-demand VMs for the plan one of the selected zones.
+
+5. Click **Save**.
+
+        
+
+7. Configure the **RabbitMQ Config** pane:
+
+1. **RabbitMQ admin user credentials**: . 
+
+2. Click **Save**.
+
+Use these credentials for full admin access to RabbitMQ through the RabbitMQ Management UI. For information about the Management UI, see [Management Plugin](http://www.rabbitmq.com/management.html).
+
+8. Click **Errands** and configure the pane. 
+
+1. **Register on-demand broker** "This registers the service to the Marketplace." What does this do? Do **services** get registered to the Marketplace or do **service plans** get registered? 
+
+2. **Deregister on-demand broker** This errand it only run if the RabbitMQ for PCF tile is deleted.
+
+9. Click **Resource Config** and reconfigure the pane.  
+
+1. **RabbitMQ on-demand broker** Use the default. If this is set this to `0`, you cannot use on-demand services with RabbitMQ for PCF. 
+
+2. **Register on-demand broker** Use the default.
+
+3. **Deregister on-demand broker** Use the default.
+
+10. Return to the Ops Manager Installation Dashboard and click **Apply Changes** to install RabbitMQ for PCF tile.
 
 
 

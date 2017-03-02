@@ -5,24 +5,64 @@ owner: London Services
 
 This topic provides some basic instructions for troubleshooting On-Demand RabbitMQ for PCF
 
-_List troubleshooting by symptom, explanation, and solution:_
+## <a id="create-instance"></a> Instance Creation Errors
 
+The following sections describe errors that occur when a developer tries to create an on-demand instance of the RabbitMQ for PCF service. 
 
+### create-instance
+
+<table border='1' class='nice'>
+<tr>
+  <th width="22%">Error</th>
+  <td>`Cannot create instance`
+ </td>
+</tr>
+<tr>
+  <th>Cause</th>
+  <td>BOSH fails when trying to create a new VM</td>
+</tr>
+<tr>
+  <th>Solution</th>
+  <td>
+    <ol>
+      <li>
+      UNDIGESTED NOTES BELOW
 
 To track down error in create-service:
+
 ssh into Ops Man Dir # need keys - keypair permissions file is somewhere
+
 Get Director password (can get from Ops Man api or find in Credentials tab of Ops Man Dir tile
+
 You're on Ops Man dir VM, and you use BOSH CLI to query Bosh Director VM for instance info:
+
 bosh --ca-cert CERTIFICATE-LOCATON target 10.0.0.5 # target Bosh Director - find address in Ops Man tile Settings
+
 cf log into space where instance to examine is running
+
 Testing:
+
 cf create-service ondemand-rabbitmq ...
+
 bosh tasks recent
+
 cf services - only one line on each
+
 cf service SERVICE-INSTANCE-NAME # more info on specific instance
+
 bosh tasks recent
+
 cf service SERVICE-INSTANCE-NAME --guid # to get GUID of instance
+
 bosh tasks recent | grep GUID # first column gives you TASK-ID # for instance
+
 bosh task TASK-ID # shows full error message
+
 bosh task TASK-ID --raw # shows raw JSON of error
+</li>
+
+    </ol>
+  </td>
+</tr>
+</table>
 

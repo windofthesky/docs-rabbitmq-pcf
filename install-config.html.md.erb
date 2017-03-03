@@ -23,13 +23,13 @@ pre-provisioned RabbitMQ for PCF</a>.</p>
 ## <a id="install"></a>  Configure the RabbitMQ for PCF tile for an On-Demand Service
 
 1. Click **Assign AZs and Networks**.
-    <p class="note"><strong>IMPORTANT</strong>: You cannot change the regions or networks after you have [deployed | clicked Apply Changes, step X below].</p>
+    <p class="note"><strong>IMPORTANT</strong>: You cannot change the regions or networks after you have clicked **Apply Changes** in the <a href="#apply-changes">final step</a> below.</p>
 
 2. Configure the fields on the **Assign AZs and Networks** as follows:
   <table>
     <tr><th>Field</th><th>Instructions</th></tr>
     <tr><td><strong>Place singleton jobs in</strong></td>
-        <td>Select the region that you want for singleton VMs. PCF creates the RabbitMQ broker in this AZ.</td></tr>
+        <td>Select the region that you want for singleton VMs. PCF creates the RabbitMQ broker in this availability zone (AZ).</td></tr>
     <tr><td><strong>Balance other jobs in</strong></td>
         <td>Select additional region. This selection does not affect the on-demand RabbitMQ for PCF service.</td></tr>
     <tr><td><strong>Network</strong></td>
@@ -55,6 +55,9 @@ pre-provisioned RabbitMQ for PCF</a>.</p>
 
 6. Click **Save**.
 
+7. If you want to set up monitoring, click **Syslog**, complete the fields, and save.<br>
+   For more information, see [Monitoring RabbitMQ for PCF](./monitor.html).
+
 7. Click **Dedicated Instance: Single Node Plan**. 
 
 8. Configure the fields on the **Dedicated Instance: Single Node Plan** as follows:
@@ -73,51 +76,32 @@ pre-provisioned RabbitMQ for PCF</a>.</p>
     <tr><td><strong>Service instance quota</strong></td>
         <td>Enter the maximum number of dedicated service instances that can be available at one time.</td></tr>
     <tr><td><strong>RabbitMQ VM Type</strong></td>
-        <td>Select a large VM type.</td></tr>
+        <td>Select a large VM type.<br>The plan will create a service instance of this size.</td></tr>
     <tr><td><strong>Persistent disk type</strong></td>
-        <td>Select a disk 5&nbsp;GB or 10&npsp;GB in size.</td></tr>
+        <td>Select a disk 5&nbsp;GB or 10&nbsp;GB in size.<br>This disk will store the RabbitMQ messages.</td></tr>
     <tr><td><strong>HPproxy VM Type</strong></td>
-        <td>Select a medium-sized VM.</td></tr>
+        <td>Select a medium-sized VM.<br> Because this plan has only one RabbitMQ server VM, 
+            all the load is sent from the HPproxy VM to the one Rabbit server VM. </td></tr>
     <tr><td><strong>AZ placement</strong></td>
-        <td>Select an AZ for the single node.</td></tr>
+        <td>Select one AZ for the single node.<br>The plan will create all the on-demand service instance VMs in this AZ.</td></tr>
   </table>
     
+9. Click **Save**.
 
-1. **RabbitMQ server VM type**: Select a size for the server instances that will be created by this plan. 
+10. Click **Stemcell**.
 
-2. **RabbitMQ server Disk type**: Select the memory for the persistent disk that will store the RabbitMQ messages.  
+11. Verify and, if necessary, import a new stemcell version.  
+    For more information, see the information about importing the stemcell for your IaaS:
+    [AWS](https://docs.pivotal.io/pivotalcf/customizing/cloudform-er-config.html#stemcell),
+    [Azure](https://docs.pivotal.io/pivotalcf/customizing/azure-er-config.html#stemcell), 
+    [GCP](https://docs.pivotal.io/pivotalcf/customizing/gcp-er-config.html#stemcell), or
+    [vSphere](https://docs.pivotal.io/pivotalcf/customizing/config-er-vmware.html#stemcell).
+    
+## <a id="apply-changes"></a>Apply Configuration and Complete the Installation
 
-3. **HAProxy VM type**: Set the size of the HAProxy load balancer that you want to balance the load. Even if you have only one RabbitMQ server VM for an instance, you need an HAProxy VM, although all the load will be balanced to the one Rabbit server VM. 
+1. <a name="apply-changes"></a>Return to the Ops Manager Installation Dashboard and click **Apply Changes** to install RabbitMQ for PCF tile.
 
-4. **RabbitMQ server availability zone(s)**:  Select an AZ. PCF creates the on-demand VMs for the plan one of the selected zones.
-
-5. Click **Save**.
-
-        
-
-7. Configure the **RabbitMQ Config** pane:
-
-1. **RabbitMQ admin user credentials**: . 
-
-2. Click **Save**.
-
-Use these credentials for full admin access to RabbitMQ through the RabbitMQ Management UI. For information about the Management UI, see [Management Plugin](http://www.rabbitmq.com/management.html).
-
-8. Click **Errands** and configure the pane. 
-
-1. **Register on-demand broker** "This registers the service to the Marketplace." What does this do? Do **services** get registered to the Marketplace or do **service plans** get registered? 
-
-2. **Deregister on-demand broker** This errand it only run if the RabbitMQ for PCF tile is deleted.
-
-9. Click **Resource Config** and reconfigure the pane.  
-
-1. **RabbitMQ on-demand broker** Use the default. If this is set this to `0`, you cannot use on-demand services with RabbitMQ for PCF. 
-
-2. **Register on-demand broker** Use the default.
-
-3. **Deregister on-demand broker** Use the default.
-
-10. Return to the Ops Manager Installation Dashboard and click **Apply Changes** to install RabbitMQ for PCF tile.
+2. **Q:** How does one follow the progress of the tile, what to check? how long does it take?
 
 
 

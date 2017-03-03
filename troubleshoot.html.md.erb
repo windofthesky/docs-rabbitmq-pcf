@@ -1,20 +1,26 @@
 ---
-title: Troubleshooting On-Demand RabbitMQ for PCF
+title: Troubleshooting
 owner: London Services
 ---
 
-This topic provides some basic instructions for troubleshooting On-Demand RabbitMQ for PCF
+This topic provides basic instructions for operators troubleshooting On-Demand RabbitMQ&reg; for PCF.
 
-## <a id="create-instance"></a> Instance Creation Errors
 
-The following sections describe errors that occur when a developer tries to create an on-demand instance of the RabbitMQ for PCF service. 
+## <a id="create-instance"></a> Errors
+
+
+### <a id="create-instance"></a> Instance Creation Errors
+
+The following sections describe errors that occur when a developer tries to create an on-demand instance of the RabbitMQ for PCF service.
 
 ### create-instance
 
 <table border='1' class='nice'>
 <tr>
   <th width="22%">Error</th>
-  <td>`Cannot create instance`
+  <td>Developers cannot create instances of on-demand services. Errors they may report include:<br>
+  <code>TK cannot create instance GUID TASK-ID</code><br>
+  <code>TK cannot create instance GUID TASK-ID</code>
  </td>
 </tr>
 <tr>
@@ -24,11 +30,31 @@ The following sections describe errors that occur when a developer tries to crea
 <tr>
   <th>Solution</th>
   <td>
-    <ol>
+    Any <code>create-instance</code>error a developer receives should include the BOSH Task ID for the instance creation job and the GUID of the half-created service instance. If the developer does not supply these, follow the instructions <a href="#determine-guid">Determine the Task ID and GUID of a Recent create-instance Call</a><ol>
       <li>
-      UNDIGESTED NOTES BELOW
 
 To track down error in create-service:
+
+</li>
+
+    </ol>
+  </td>
+</tr>
+</table>
+
+## <a id="techniques"></a> Techniques
+
+
+### <a id="determine-guid"></a> Determine the Task ID and GUID of a Recent create-instance Call
+
+Use this procedure to determine the BOSH Task ID and instance GUID of a recently-created service instance, whether created successfully or otherwise.
+
+1. Using the cf CLI, target and to log in to your deployment. See [Login](../cf-cli/getting-started.html#login) the Getting Started with the cf CLI topic.
+<pre class="terminal">
+$ cf login -a https://api.example.com -u username@example.com
+API endpoint: https://api.example.com
+
+</pre>
 
 ssh into Ops Man Dir # need keys - keypair permissions file is somewhere
 
@@ -59,10 +85,11 @@ bosh tasks recent | grep GUID # first column gives you TASK-ID # for instance
 bosh task TASK-ID # shows full error message
 
 bosh task TASK-ID --raw # shows raw JSON of error
-</li>
 
-    </ol>
-  </td>
-</tr>
-</table>
+
+
+
+
+
+
 

@@ -30,7 +30,7 @@ The following sections describe errors that occur when a developer tries to crea
 <tr>
   <th>Solution</th>
   <td>
-    Any <code>create-instance</code>error a developer receives should include the BOSH Task ID for the instance creation job and the GUID of the half-created service instance. If the developer does not supply these, follow the instructions <a href="#determine-guid">Determine the Task ID and GUID of a Recent create-instance Call</a><ol>
+    Any <code>create-instance</code>error a developer receives should include the BOSH Task ID for the instance creation job and the GUID of the half-created service instance. If the developer does not supply these, follow the instructions <a href="#determine-guid">Determine the Task ID and GUID of a Recent create-instance Call</a>.<ol>
       <li>
 
 To track down error in create-service:
@@ -45,20 +45,28 @@ To track down error in create-service:
 ## <a id="techniques"></a> Techniques
 
 
-### <a id="determine-guid"></a> Determine the Task ID and GUID of a Recent create-instance Call
+### <a id="determine-guid"></a> Determine the Task ID and GUID of a Recent <i>cf create-instance</i>
 
-Use this procedure to determine the BOSH Task ID and instance GUID of a recently-created service instance, whether created successfully or otherwise.
+When `cf create-instance` fails, the error message includes the following two identifiers, which are useful for debugging:
 
-1. Using the cf CLI, target and to log in to your deployment. See [Login](../cf-cli/getting-started.html#login) the Getting Started with the cf CLI topic.
-<pre class="terminal">
-$ cf login -a https://api.example.com -u username@example.com
-API endpoint: https://api.example.com
+* The Task ID for the BOSH task that creates the service instance
+* The GUID of instance that was not successfully created
 
-</pre>
+The following procedure retrieves these two identifiers if you only know the the following. This may happen when a developer reports that instance creation failed but no longer has the error message:
 
-ssh into Ops Man Dir # need keys - keypair permissions file is somewhere
+* The service name
+* The org and space that `create-instance` was called in
+* That the `create instance` command was run recently
 
-Get Director password (can get from Ops Man api or find in Credentials tab of Ops Man Dir tile
+1. Use the cf CLI to target and to log in to your deployment. See [Login](../cf-cli/getting-started.html#login) the *Getting Started with the cf CLI* topic.
+    <pre class="terminal">
+    $ cf login -a https<span>://</span>api.example.com -u username<span>@</span>example.com
+    API endpoint: https<span>://</span>api.example.com
+    </pre>
+
+1. Follow the directions to [SSH into Ops Manager](/customizing/trouble-advanced.html#ssh) in the *Advanced Troubleshooting with the BOSH CLI* topic. To do this, you must have the keypair used to install Ops Manager saved on your local machine.
+
+1. Continue following the *Advanced Troubleshooting* directions to [Log into BOSH](/customizing/trouble-advanced.html#log-in). You can retrieve the Ops Manager Director password from the Ops Manager API or find it in the **Credentials** tab of Ops Man Director tile **Credentials** tab.
 
 You're on Ops Man dir VM, and you use BOSH CLI to query Bosh Director VM for instance info:
 

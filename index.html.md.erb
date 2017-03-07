@@ -5,28 +5,41 @@ owner: London Services
 ---
 
 <p class="note"><strong>Note</strong>: Pre-released DRAFT documentation. </p>
-This guide describes setting up and using RabbitMQ&reg; for Pivotal Cloud Foundry (PCF) as an on-demand service.
-<p class="note"><strong>Note</strong>: For information about using RabbitMQ for PCF as a pre-provisioned service, 
-see [RabbitMQ for PCF (Pre-Provisioned)](http://docs-pcf-staging.cfapps.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/).</p>
+This guide describes setting up and using RabbitMQ&reg; for Pivotal Cloud Foundry (PCF) as an on-demand service. RabbitMQ enables messaging between cloud-based servers, apps and devices.
+
+For information about using RabbitMQ for PCF as a pre-provisioned service, 
+see [RabbitMQ for PCF (Pre-Provisioned)](http://docs-pcf-staging.cfapps.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/).
 
 ## <a id='AboutTile'></a>About RabbitMQ for PCF
 
-Operators install the RabbitMQ for PCF service and publish it to the Marketplace using PCF Operations Manager (Ops Manager).
-Developers then create service instances of the service to call from their apps. 
+RabbitMQ for PCF is a line of two software services that enable PCF app developers to use the RabbitMQ messaging service in their apps. Operators install the services using PCF Operations Manager (Ops Manager) and publish them to the Marketplace. App developers can then create instances of the service to call from their apps. 
 
-RabbitMQ for PCF can run as either a pre-provisioned, probably multi-tenant, service provisioned by the operator, 
-or as an on-demand service that allows developers to provision dedicated instances dynamically.
+Pivotal Network distributes two versions of RabbitMQ for PCF, the *on-demand* service and the *pre-provisioned* service. This table summarizes the main differences between the two:
 
-You can deploy RabbitMQ for PCF in two architectures, *on-demand* and *pre-provisioned*:
+<table id='rabbit-odb-vs-pre' border="1" class="nice"><tr>
+   <th></th>
+   <th>Available Since</th>
+   <th>VMs it Runs On</th>
+   <th>How VMs are Created</th>
+   <th>Metrics Name Prefix</th>
+   </tr><tr>
+   <th>On-Demand Service</th>
+   <td>New for v1.8</td>
+   <td>Dedicated VM that serves a single service instance</td>
+   <td>PCF creates each VM on-demand when app developer creates service instance</td>
+   <td><code>p.rabbit</code> (with a dot)</td>
+   </tr><tr>
+   <th>Pre-Provisioned Service</th>
+   <td>v1.2</td>
+   <td>Multi-tenant VMs shared by apps across PCF deployment</td>
+   <td>PCF creates all VMs when operator deploys or updates service</td>
+   <td><code>p-rabbit</code> (with a dash)</td>
+   </tr>
+</table>
 
-+ The *on-demand service* architecture is new as of v1.8. 
-  This v1.8+ documentation describes using RabbitMQ for PCF as an on-demand service. 
-
-+ The *pre-provisioned service* architecture has been available since v1.2. 
-  Operators can deploy the pre-provisioned service to run on a single node or on a cluster. 
-  For documentation on the pre-provisioned service, see 
+This v1.8+ documentation describes on-demand RabbitMQ for PCF. For documentation on the pre-provisioned service, see 
 [RabbitMQ for Pivotal Cloud Foundry Documentation](https://docs.pivotal.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/index.html) 
-or select `v1.7.10` or earlier in the dropi-down menu above. 
+or select `v1.7.10` or earlier in the dropdown menu above. 
 
 ## <a id='AboutRabbit'></a>About RabbitMQ
 

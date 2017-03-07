@@ -30,14 +30,17 @@ The following sections describe errors that occur when a developer tries to crea
 <tr>
   <th>Solution</th>
   <td>
-    Any <code>create-instance</code>error a developer receives should include the BOSH Task ID for the instance creation job and the GUID of the half-created service instance. If the developer does not supply these, follow the instructions <a href="#determine-guid">Determine the Task ID and GUID of a Recent create-instance Call</a>.<ol>
-      <li>
+    Any <code>create-instance</code>error a developer receives should include the BOSH Task ID for the instance creation job and the GUID of the half-created service instance. If the developer does not supply these, follow the instructions <a href="#determine-guid">Determine the Task ID and GUID of an Instance</a>.
 
-To track down error in create-service:
-
-</li>
-
-    </ol>
+    <ol><li>
+      Run <code>bosh task TASK-ID</code> to show any instance creation task errors from BOSH. Possible errors include failure at the IaaS level and hitting your rate limit for the day.
+    </li><li>
+      If the BOSH task completed successfully, the problem was elsewhere. Set up a trace in your logging platform or search your syslog for the service instance GUID. This generates a series of log messages that tracks how far the instance creation request got.
+    </li><li>
+      Refer to the [Create Service Instance](https://docs.pivotal.io/on-demand-service-broker/concepts.html#create-service-instance) sequence diagram to see how PCF components create a service instance. Compare this successful sequence of component actions and messages with the trace from your logging platform.
+    </li><li>
+      To zero in on a specific failed component or unreceived message, test half of the sequence at a time and find out which half failed, then continue dividing in half and testing.
+    </li></ol>
   </td>
 </tr>
 </table>
@@ -45,18 +48,14 @@ To track down error in create-service:
 ## <a id="techniques"></a> Techniques
 
 
-### <a id="determine-guid"></a> Determine the Task ID and GUID of a Recent <i>cf create-instance</i>
+### <a id="determine-guid"></a> Determine the Task ID and GUID of an Instance
 
-When `cf create-instance` fails, the error message includes the following two identifiers, which are useful for debugging:
+When debugging an instance of the on-demand RabbitMQ for PCF service, the following two identifiers are useful:
 
 * The Task ID for the BOSH task that creates the service instance
 * The GUID of instance that was not successfully created
 
-The following procedure retrieves these two identifiers if you only know the the following. This may happen when a developer reports that instance creation failed but no longer has the error message:
-
-* The service name
-* The org and space that `create-instance` was called in
-* That the `create instance` command was run recently
+This procedure retrieves these two values if you only know the service name and the org and space containing the instance.
 
 1. Use the cf CLI to target and to log in to your deployment. See [Login](../cf-cli/getting-started.html#login) the *Getting Started with the cf CLI* topic.
     <pre class="terminal">
@@ -64,21 +63,25 @@ The following procedure retrieves these two identifiers if you only know the the
     API endpoint: https<span>://</span>api.example.com
     </pre>
 
-1. Follow the directions to [SSH into Ops Manager](/customizing/trouble-advanced.html#ssh) in the *Advanced Troubleshooting with the BOSH CLI* topic. To do this, you must have the keypair used to install Ops Manager saved on your local machine.
+1. Follow the directions to [SSH into Ops Manager](/customizing/trouble-advanced.html#ssh) in the *Advanced Troubleshooting with the BOSH CLI* topic. Use the following values:
 
-1. Continue following the *Advanced Troubleshooting* directions to [Log into BOSH](/customizing/trouble-advanced.html#log-in). You can retrieve the Ops Manager Director password from the Ops Manager API or find it in the **Credentials** tab of Ops Man Director tile **Credentials** tab.
+    * **Certificate Location**: Use the file path on your local machine to the key pair used to install Ops Manager.
+    * **BOSH Director IP Address**: Retrieve from the Ops Manager Director tile **Status** tab.
+    * **BOSH Director Credentials**: Retrieve from the Ops Manager API or find it in the Ops Man Director tile **Credentials** tab > **Director Credentials**.
 
-You're on Ops Man dir VM, and you use BOSH CLI to query Bosh Director VM for instance info:
+1. Continue following the *Advanced Troubleshooting* directions to [Log into BOSH](/customizing/trouble-advanced.html#log-in). 
 
-bosh --ca-cert CERTIFICATE-LOCATON target 10.0.0.5 # target Bosh Director - find address in Ops Man tile Settings
+1. From the Ops Manager Director VM you can now use the BOSH CLI to retrieve information about service instances from the BOSH Director VM.
+    <pre class="terminal">
+    $ bosh --ca-cert CERTIFICATE-LOCATON target BOSH-DIRECTOR-IP
+    </pre>
 
-cf log into space where instance to examine is running
+1. Log into the space containing the instance or failed instance. 
+    <pre class="terminal">
+    $ cf login
+    </pre>
 
-Testing:
-
-cf create-service ondemand-rabbitmq ...
-
-bosh tasks recent
+1. Run `cf services` to see a listing of
 
 cf services - only one line on each
 

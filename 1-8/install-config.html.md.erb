@@ -1,0 +1,109 @@
+---
+title: Installing and Configuring RabbitMQ for PCF
+owner: London Services
+---
+
+This topic provides instructions to PCF operators about how to install, configure, and deploy the RabbitMQ for PCF tile to provide on-demand service. 
+
+<p class="note"><strong>Note</strong>: For instructions on how to install, configure, and deploy the RabbitMQ for PCF tile, see
+<a href="http://docs-pcf-staging.cfapps.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/index.html">the documentation for
+pre-provisioned RabbitMQ for PCF</a>.</p>
+
+## <a id="install"></a> Download and Install the Tile
+
+1. Download the product file from Pivotal Network.
+
+2. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file. 
+
+3. Under the **Import a Product** button, click **+** next to the version number of RabbitMQ for PCF. This adds the tile to your staging area.
+
+4. Click the newly added **RabbitMQ for PCF** tile.
+
+## <a id="install"></a>  Configure the Tile for On-Demand Service
+
+1. Click **Assign AZs and Networks**.
+    <p class="note"><strong>IMPORTANT</strong>: You cannot change the regions or networks after you have clicked **Apply Changes** in the <a href="#apply-changes">final step</a> below.</p>
+
+2. Configure the fields on the **Assign AZs and Networks** as follows:
+  <table>
+    <tr><th>Field</th><th>Instructions</th></tr>
+    <tr><td><strong>Place singleton jobs in</strong></td>
+        <td>Select the region that you want for singleton VMs. PCF creates the RabbitMQ broker in this availability zone (AZ).</td></tr>
+    <tr><td><strong>Balance other jobs in</strong></td>
+        <td>Select additional region. This selection does not affect the on-demand RabbitMQ for PCF service.</td></tr>
+    <tr><td><strong>Network</strong></td>
+        <td>Select a subnet for the RabbitMQ broker.<br>
+            This network is represented by the Default Network in this <a href="https://docs.pivotal.io/on-demand-service-broker/0-14/about.html">picture</a>.
+            Typically, you select the subnet used for the Pivotal Elastic Runtime components.
+            <strong>Q:</strong> Who sets up this subnet? Should I use the same subnet as for my ERT components? Do we need to specify that it cannot be an IPsec subnet?
+            <a href="https://docs.pivotal.io/rabbitmq-cf/1-7/">https://docs.pivotal.io/rabbitmq-cf/1-7/</a>.</td></tr>
+    <tr><td><strong>Service Network</strong></td>
+        <td> This is the subnet that the on-demand service instances are on. 
+             A typical practice is to put all on-demand services on a single subnet. (?) 
+             This network is represented by the Services Network in this <a herf="https://docs.pivotal.io/on-demand-service-broker/0-14/about.html">picture</a>. 
+             If you are not using on-demand services but only classic services, you need to specify a subnet but which subnet you specify does not matter.</td></tr>
+  </table>
+
+3. Click **Save**.
+
+4. Click **RabbitMQ**.
+
+5. Enter **RabbitMQ admin user credentials**.<br>
+   These credentials are not used by the on-demand RabbitMQ for PCF service but the fields cannot be blank.
+   You do not need to make any other edits to this page.
+
+6. Click **Save**.
+
+7. If you want to set up monitoring, click **Syslog**, complete the fields, and save.<br>
+   For more information, see [Monitoring RabbitMQ for PCF](./monitor.html).
+
+7. Click **Dedicated Instance: Single Node Plan**. 
+
+8. Configure the fields on the **Dedicated Instance: Single Node Plan** as follows:
+  <table>
+    <tr><th>Field</th><th>Instructions</th></tr>
+    <tr><td><strong>Enable this plan</strong></strong></td>
+        <td>Select the checkbox.</td></tr>
+    <tr><td><strong>Marketplace name</strong></td>
+        <td>Accept the default or enter a name.</td></tr>
+    <tr><td><strong>Plan name</strong></td>
+        <td>Accept the default or enter a name.</td></tr>
+    <tr><td><strong>Plan description</strong></td>
+        <td>Accept the default or enter a description.</td></tr>
+    <tr><td><strong>Plan features</strong></td>
+        <td>Accept the default or enter information about the plan to help your app developers.</td></tr>
+    <tr><td><strong>Service instance quota</strong></td>
+        <td>Enter the maximum number of dedicated service instances that can be available at one time.</td></tr>
+    <tr><td><strong>RabbitMQ VM Type</strong></td>
+        <td>Select a large VM type.<br>The plan will create a service instance of this size.</td></tr>
+    <tr><td><strong>Persistent disk type</strong></td>
+        <td>Select a disk 5&nbsp;GB or 10&nbsp;GB in size.<br>This disk will store the RabbitMQ messages.</td></tr>
+    <tr><td><strong>HPproxy VM Type</strong></td>
+        <td>Select a medium-sized VM.<br> Because this plan has only one RabbitMQ server VM, 
+            all the load is sent from the HPproxy VM to the one Rabbit server VM. </td></tr>
+    <tr><td><strong>AZ placement</strong></td>
+        <td>Select one AZ for the single node.<br>The plan will create all the on-demand service instance VMs in this AZ.</td></tr>
+  </table>
+    
+9. Click **Save**.
+
+10. Click **Stemcell**.
+
+11. Verify and, if necessary, import a new stemcell version.  
+    For more information, see the information about importing the stemcell for your IaaS:
+    [AWS](https://docs.pivotal.io/pivotalcf/customizing/cloudform-er-config.html#stemcell),
+    [Azure](https://docs.pivotal.io/pivotalcf/customizing/azure-er-config.html#stemcell), 
+    [GCP](https://docs.pivotal.io/pivotalcf/customizing/gcp-er-config.html#stemcell), or
+    [vSphere](https://docs.pivotal.io/pivotalcf/customizing/config-er-vmware.html#stemcell).
+    
+## <a id="apply-changes"></a>Apply Configuration and Complete the Installation
+
+1. <a name="apply-changes"></a>Return to the Ops Manager Installation Dashboard and click **Apply Changes** to install RabbitMQ for PCF tile.
+
+2. **Q:** How does one follow the progress of the tile, what to check? how long does it take?
+
+
+
+
+
+

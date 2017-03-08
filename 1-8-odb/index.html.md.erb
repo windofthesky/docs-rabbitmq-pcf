@@ -1,0 +1,99 @@
+---
+breadcrumb: RabbitMQ for Pivotal Cloud Foundry Documentation
+title: RabbitMQ for PCF (On-Demand)
+owner: London Services
+---
+
+<p class="note"><strong>Note</strong>: Pre-released DRAFT documentation. </p>
+This guide describes setting up and using RabbitMQ&reg; for Pivotal Cloud Foundry (PCF) as an on-demand service. RabbitMQ enables messaging between cloud-based servers, apps and devices.
+
+For information about using RabbitMQ for PCF as a pre-provisioned service, 
+see [RabbitMQ for PCF (Pre-Provisioned)](http://docs-pcf-staging.cfapps.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/).
+
+## <a id='AboutTile'></a>About RabbitMQ for PCF
+
+RabbitMQ for PCF is a line of two software services that enable PCF app developers to use the RabbitMQ messaging service in their apps. Operators install the services using PCF Operations Manager (Ops Manager) and publish them to the Marketplace. App developers can then create instances of the service to call from their apps. 
+
+Pivotal Network distributes two versions of RabbitMQ for PCF, the *on-demand* service and the *pre-provisioned* service. This table summarizes the main differences between the two:
+
+<table id='rabbit-odb-vs-pre' border="1" class="nice"><tr>
+   <th></th>
+   <th>Available Since</th>
+   <th>VMs it Runs On</th>
+   <th>How VMs are Created</th>
+   <th>Metrics Name Prefix</th>
+   </tr><tr>
+   <th>On-Demand Service</th>
+   <td>New for v1.8</td>
+   <td>Dedicated VM that serves a single service instance</td>
+   <td>PCF creates each VM on-demand when app developer creates service instance</td>
+   <td><code>p.rabbit</code> (with a dot)</td>
+   </tr><tr>
+   <th>Pre-Provisioned Service</th>
+   <td>v1.2</td>
+   <td>Multi-tenant VMs shared by apps across PCF deployment</td>
+   <td>PCF creates all VMs when operator deploys or updates service</td>
+   <td><code>p-rabbit</code> (with a dash)</td>
+   </tr>
+</table>
+
+This v1.8+ documentation describes on-demand RabbitMQ for PCF. For documentation on the pre-provisioned service, see 
+[RabbitMQ for Pivotal Cloud Foundry Documentation](https://docs.pivotal.io/rabbitmq-cf-d34379b0-a290-47c7-bc6c-c45a9adfa8c7/index.html) 
+or select `v1.7.10` or earlier in the dropdown menu above. 
+
+## <a id='AboutRabbit'></a>About RabbitMQ
+
+RabbitMQ is a fast and dependable open-source message server, which supports a wide range of use cases 
+including reliable integration, content based routing and global data delivery, and high volume monitoring and data ingestion.
+
+Emerging as the de facto standard for cloud messaging, RabbitMQ is used for efficient communication 
+between servers, applications and devices, and creates lasting value by enabling rapid development of modern decentralized 
+application and data architectures that can scale with your business needs.
+
+
+
+## <a id='snapshot'></a> Product Snapshot
+
+<dl>
+<dt>Current RabbitMQ for PCF Details</dt>
+<dd><strong>Version</strong>: v1.8.0 </dd>
+<dd><strong>Release Date</strong>:  March 31, 2017</dd>
+<dd><strong>Software component version</strong>: RabbitMQ OSS v3.6.6</dd>
+<dd><strong>Compatible Ops Manager Version(s)</strong>: v1.8.x </dd>
+<dd><strong>Compatible Elastic Runtime Version(s)</strong>: v1.8.x </dd>
+<dd><strong>AWS support?</strong> Yes</dd>
+<dd><strong>Azure support?</strong> ???</dd>
+<dd><strong>GCP support?</strong> ???</dd>
+<dd><strong>OpenStack support?</strong> Yes</dd>
+<dd><strong>vSphere support?</strong> Yes</dd>
+<dd><strong>IPsec support?</strong> No</dd>
+</dl>
+
+## <a id='features'></a>Features
+
+REVISE THIS FEATURE LIST FOR ON-DEMAND
+
+* Provision an instance of the RabbitMQ service, which corresponds to a unique RabbitMQ Vhost (virtual host)
+* Bind applications to an instance of the plan, providing unique credentials for each binding
+* Management dashboard access to PCF Operators and application developers
+* Deployment across multiple availability zones, with nodes striped across the AZs automatically
+* Enable SSL (Secure Sockets Layer) for the AMQP, MQTT, STOMP protocols
+* HAProxy load balancer across all nodes to balance connections
+* Plugin configuration can be easily changed at any time and the cluster redeployed and updated
+* The cluster topology can be changed and easily scaled out
+* Automated upgrades of RabbitMQ for major, minor and patch releases (see release notes for downtime requirements)
+* Configure the end point for the RabbitMQ Syslog
+* RabbitMQ and HAProxy metrics are exposed on the firehose
+
+## <a id='known-issues'></a>Known Issues
+
+TK KNOWN ISSUES WITH ON-DEMAND RABBITMQ FOR PCF
+
+## <a id=''></a>Feedback
+
+Please provide any bugs, feature requests, or questions to the [PCF Feedback list](mailto:pivotal-cf-feedback@pivotal.io).
+
+## <a id='see-also'></a>See Also
+
+TK SEE ALSO FOR ON-DEMAND RABBITMQ FOR PCF - ANOTHER LINK TO "CLASSIC" DOCS?
+

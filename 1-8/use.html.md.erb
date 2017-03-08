@@ -1,0 +1,96 @@
+---
+title: Using the RabbitMQ for PCF Service On-Demand
+owner: London Services
+---
+
+This topic provides instructions for developers using the on-demand RabbitMQ service for their Pivotal Cloud Foundry (PCF) apps. RabbitMQ enables messaging between cloud-based servers, apps and devices.
+
+For information about using RabbitMQ for PCF as a pre-provisioned service, 
+see [RabbitMQ for PCF v1.7 documentation](../1-7/index.html).
+
+## <a id="prereqs"></a>Prerequisites
+
+LIST WHAT YOU NEED BEFORE YOU DO THESE
+
+Your PCF operator has made the RabbitMQ Service (?) available in the Marketplace
+
+You have the 
+
+## <a id='create'></a>Create a service
+
+<code>
+
+   cf api
+
+   cf marketplace
+
+   cd rabbit-labrat/
+
+   cf create-service cf-rabbitmq-odb one-node test-rabbit
+
+   watch cf services
+
+</code>
+
+## <a id="bind"></a>Bind a Service Instance to Your App
+
+<code>
+
+   cf push
+
+   cf bind-service lab-rat test-rabbit
+
+   cf restage lab-rat
+
+   cf env lab-rat
+
+</code>
+
+## <a id="unbind"></a>Unbind a Service Instance to Your App
+
+<code>
+
+   cf unbind-service lab-rat test-rabbit
+
+   cf restage lab-rat
+
+</code>
+
+## <a id="delete"></a>Delete a Service Instance
+
+<code>
+
+   cf delete-service test-rabbit
+
+   cf service test-rabbit
+
+   watch cf service test-rabbit
+
+   cf services
+
+</code>
+
+
+
+   cf api
+   cf marketplace
+   cd rabbit-labrat/
+   cf create-service cf-rabbitmq-odb one-node test-rabbit
+   watch cf services
+   cf push
+   cf bind-service lab-rat test-rabbit
+   cf restage lab-rat
+   cf env lab-rat
+   cf unbind-service lab-rat test-rabbit
+   cf restage lab-rat
+   cf delete-service test-rabbit
+   cf service test-rabbit
+   watch cf service test-rabbit
+   cf services
+`
+
+and the bosh commands:
+   bosh tasks
+   bosh task 234
+   bosh run errand
+   bosh deployments

@@ -1,0 +1,68 @@
+---
+title: Upgrading My Service
+owner: <your group name> # <---- For example "London Services"
+---
+
+_This topic provides the upgrade path information and instructions on how to upgrade the product._
+
+_Example:_
+This version of Pivotal GemFire for PCF supports upgrading from all the previous versions of the product. Running service instances are automatically upgraded one node at a time. If you configured your clusters with data redundancy, then the upgrade process requires no downtime and results in no data loss.
+Note: Upgrades from Alpha or Beta versions of the software are not supported.
+
+## <a id="path"></a> Upgrade Path
+
+_Outline the upgrade route from any previous version to the current. This can be a table listing which versions of Ops Manager support which product version upgrades. For example:_
+
+<table border="1" class="nice">
+<tr>
+  <th rowspan="2">Elastic Runtime Version</th>
+  <th colspan="2">Supported Upgrades from SSO Versions</th>
+</tr>
+<tr>
+  <th>From</th>
+  <th>To</th>
+</tr><tr>
+  <th rowspan="1">1.6.x</th>
+  <td>1.0.1-1.0.14</td>
+  <td rowspan="1">1.0.15</td>
+</tr><tr>
+  <th rowspan="2">1.7.x</th>
+  <td>1.0.1-1.0.15</td>
+  <td rowspan="2">1.1.1</td>
+</tr><tr>
+  <td>1.1.0</td>
+</tr>
+</table>
+
+_Other examples of tables used for the Upgrade Path:_
+
+* [App Distribution](http://docs.pivotal.io/app-dist/index.html)
+* [RabbitMQ for PCF](http://docs.pivotal.io/rabbitmq-cf/index.html) for an example of a complicated upgrade path.
+
+
+_For simpler cases, when the upgrade path is identical to the installation procedure, you can write a mini-procedure like this:_
+
+Follow the [Install My Service](./install-config.html) procedure to upgrade.
+
+
+## <a id="prepare"></a> Preparing to Upgrade (if procedures) or Prerequisites for Upgrading (if just a list)
+
+_body text_
+
+## <a id="upgrade"></a>Upgrade to the Latest Version
+
+_body text_
+
+## <a id="config-check"></a> Configuration Check
+
+_Any configuration changes required after upgrading._
+
+## <a id="policy"></a> Release Policy
+
+_Optional, see example below._
+
+Where there is a new version of RabbitMQ or another dependent software component, such as the stemcell released due to a critical CVE, Pivotal’s goal is to release a new version of the product within 48 hours.
+
+
+
+

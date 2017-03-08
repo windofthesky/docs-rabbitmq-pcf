@@ -1,0 +1,108 @@
+---
+breadcrumb: RabbitMQ for Pivotal Cloud Foundry&reg; Documentation
+title: Configuring the RabbitMQ Service
+owner: London Services
+---
+
+# Configuration
+
+On the RabbitMQ for [Pivotal Cloud Foundry&reg;](https://network.pivotal.io/products/pivotal-cf) (PCF) tile in Ops Manager, you can configure the following items:
+
+## Management dashboard
+
+You must choose an admin username and password for RabbitMQ.
+
+This will grant you full admin access to RabbitMQ via the Management UI.
+
+<%= image_tag("images/config_credentials.jpeg") %>
+
+## Plugins
+
+You can choose which plugins you wish to enable.
+
+You must leave the management plugin enabled otherwise nothing will work.
+
+<%= image_tag("images/config_plugins.jpeg") %>
+
+[Click here for more information about RabbitMQ plugins](https://www.rabbitmq.com/plugins.html)
+
+## HAProxy ports
+
+You can choose which ports HAProxy should load balance to the RabbitMQ nodes.
+
+<%= image_tag("images/config_haproxy.jpeg") %>
+
+By default all the default ports of all the available plugins will be load-balanced.
+
+However, if you install extra protocol plugins, or provide a custom configuration which changes the ports that RabbitMQ listens on then you must update the list of load-balanced ports.
+
+Note that you must always leave the management plugin listening on port 15672 and load balance that port.
+
+If you change the topology of your RabbitMQ cluster, the HAProxy is automatically reconfigured during the deployment.
+
+### Port to protocol mappings
+
+15672 = Management dashboard
+
+5672 = Rabbit
+
+5671 = Rabbit ssl
+
+1883 = MQTT
+
+8883 = MQTT SSL
+
+61613 = STOMP
+
+61614 = STOMP SSL
+
+15674 = Web STOMP
+
+## SSL
+
+You can provide SSL certificates and keys for use by the RabbitMQ cluster.
+
+<%= image_tag("images/config_ssl.jpeg") %>
+
+Note SSL is simultaneously provided on the AMQPS port (5671) and the management port (15672).
+
+If you provide SSL keys and certificates, you are disabling non-SSL support.
+
+No other plugins are automatically configured for use with SSL.
+
+Note SSL settings are applied equally across all machines in the cluster.
+
+[Click here for more information about SSL support](https://www.rabbitmq.com/ssl.html)
+
+## Erlang Cookie
+
+You can provide an Erlang cookie to be used by the cluster if you wish.
+This can be useful if you want to connect directly to the RabbitMQ cluster such as with `rabbitmqctl` or to connect other machines running Erlang.
+
+<%= image_tag("images/config_erlang.jpeg") %>
+
+## RabbitMQ Config
+
+You can provide a full <code>rabbitmq.config</code> file, if you wish.
+
+<%= image_tag("images/config_rabbitmq.jpeg") %>
+
+This file is then provided to all the nodes in the cluster.
+
+[Click here for more information about the RabbitMQ configuration file](https://www.rabbitmq.com/configure.html)
+
+## TLS Support
+
+TLS v1.0 is disabled by default, due to insecurities.
+
+<%= image_tag("images/config_tls1.jpeg") %>
+
+You can enable it again by ticking the checkbox.
+
+TLS v1.1 and 1.2 are enabled by default and cannot be turned on or off.
+
+## External load balancer
+<%= image_tag("images/config_elb.jpeg") %>
+
+You can configure a DNS name or IP address of an external load balancer to be returned in the binding credentials (`VCAP_SERVICES`) to application developers.
+

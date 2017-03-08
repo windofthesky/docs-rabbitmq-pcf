@@ -1,0 +1,44 @@
+---
+breadcrumb: RabbitMQ for Pivotal Cloud Foundry Documentation
+title: Default policies for the RabbitMQ&reg; Service
+owner: London Services
+---
+
+# RabbitMQ Policy
+
+An example policy is configured in OpsManager but not enabled.
+
+You should configure the policy to suit your own deployment. The example in the "Policy for new instances" textarea is given as guidance of how to format the configuration.
+
+The following rules apply:
+
+* The policy is only applied to new instances
+* Any existing instances will not have the policy applied
+* The policy can be updated in OpsManager and this will only be applied to any new instances created there after
+* The policy can only be deleted manually from the RabbitMQ nodes
+
+## Viewing or changing the policy
+In OpsManager on the RabbitMQ tile, there is a left hand menu item called `RabbitMQ Policy`
+
+<%= image_tag("images/policy_opsman.jpeg") %>
+
+The policy must be valid JSON and it should use valid RabbitMQ policy criteria.
+This is not validated during the deployment, so any errors could either cause the deployment to fail or policies to not be applied correctly.
+
+For more information, view [RabbitMQ Policies](http://www.rabbitmq.com/parameters.html#policies).
+
+## RabbitMQ dashboard
+
+You can view the policy on the RabbitMQ Dashboard. The URL can be obtained from your `VCAP_SERVICES` for application developers.
+
+The policy is applied to all queues, with a rank of 50 so it can be overriden by defining your own policy with a higher rank.
+<%= image_tag("images/policy_config.jpeg") %>
+
+You can see any new queues created have the policy automatically applied.
+<%= image_tag("images/policy_queue.jpeg") %>
+
+## Network partition behavior
+
+It is possible to change how you would want RabbitMQ to act once it discovers there has been a network partition.  The two options are `pause_minority` and `autoheal`, and more detail on these settings can be found here: https://www.rabbitmq.com/partitions.html
+
+You must set the choose the option you want before deploying, or the default `pause_minority` will be used.
